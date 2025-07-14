@@ -1,0 +1,27 @@
+[
+  {
+    "id": "db_bench_press",
+    "name": "Dumbbell Bench Press",
+    "equipment": ["dumbbells"],
+    "difficulty": "intermediate",
+    "target_muscles": ["chest", "triceps"],
+    "contraindications": []
+  },
+  {
+    "id": "goblet_squat",
+    "name": "Goblet Squat",
+    "equipment": ["dumbbells"],
+    "difficulty": "beginner",
+    "target_muscles": ["legs", "glutes"],
+    "contraindications": ["knee_pain"]
+  },
+  {
+    "id": "plank",
+    "name": "Plank",
+    "equipment": ["bodyweight"],
+    "difficulty": "beginner",
+    "target_muscles": ["core"],
+    "contraindications": []
+  }
+]
+
