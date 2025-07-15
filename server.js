@@ -4,7 +4,6 @@ const cors = require("cors");
 const OpenAI = require("openai");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-require("dotenv").config();
 console.log("DEBUG ENV OPENAI_API_KEY:", process.env.OPENAI_API_KEY ? "exists" : "missing");
 
 const app = express();
