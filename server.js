@@ -1,4 +1,7 @@
-
+console.log("DEBUG ENVIRONMENT:");
+console.log("OPENAI_API_KEY:", JSON.stringify(process.env.OPENAI_API_KEY));
+console.log("SENDGRID_API_KEY:", JSON.stringify(process.env.SENDGRID_API_KEY));
+console.log("STRIPE_SECRET_KEY:", JSON.stringify(process.env.STRIPE_SECRET_KEY));
 const express = require("express");
 const cors = require("cors");
 const OpenAI = require("openai");
