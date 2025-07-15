@@ -8,6 +8,7 @@ const OpenAI = require("openai");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 console.log("DEBUG ENV OPENAI_API_KEY:", process.env.OPENAI_API_KEY ? "exists" : "missing");
+console.log("DEBUG - All environment variables at startup:", process.env);
 
 const app = express();
 app.use(bodyParser.json());
