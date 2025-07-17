@@ -418,10 +418,13 @@ IMPORTANT:
 try {
   const completion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    messages: [
-      { role: "system", content: "You are a helpful fitness assistant." },
-      { role: "user", content: prompt }
-    ],
+messages: [
+  { role: "system", content: "You are a helpful fitness assistant." },
+  { 
+    role: "user", 
+    content: `${prompt}\n\nRespond ONLY in valid JSON format without any explanation or extra text.` 
+  }
+],
     temperature: 0.4
   });
 
