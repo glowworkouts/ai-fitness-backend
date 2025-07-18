@@ -22,9 +22,9 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson) {
+function generatePdfBuffer(planJson, customerName = "Client") {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument();
+    const doc = new PDFDocument({ size: 'A4', margin: 50 });
     const buffers = [];
 
     doc.on("data", buffers.push.bind(buffers));
@@ -33,13 +33,30 @@ function generatePdfBuffer(planJson) {
       resolve(pdfData);
     });
 
+    // --- Title Page ---
+    doc.fontSize(26).fillColor("#000").text("Your Personalized Fitness Plan", {
+      align: "center",
+      underline: true
+    });
+    doc.moveDown(2);
+    doc.fontSize(20).text(`Prepared for: ${customerName}`, { align: "center" });
+    doc.moveDown();
+    doc.fontSize(16).text("Thank you for using Glow Workouts!", { align: "center" });
+    doc.moveDown(4);
+    doc.fontSize(12).text("This document contains a tailored 1-week workout plan created by our AI fitness assistant.", {
+      align: "center"
+    });
+
+    doc.addPage(); // ➕ Go to a new page after title
+
+    // --- Actual Plan Content ---
     doc.fontSize(20).text("Your 1-Week Workout Plan", { align: "center" });
     doc.moveDown();
 
     const workouts = planJson.week_1.workouts;
-    workouts.forEach(workout => {
+    workouts.forEach((workout) => {
       doc.fontSize(16).text(`Day: ${workout.day}`);
-      workout.exercises.forEach(ex => {
+      workout.exercises.forEach((ex) => {
         doc.fontSize(12).text(
           `- ${ex.exercise_name} (${ex.muscle_group}): ${ex.sets} sets x ${ex.reps} reps, RIR ${ex.reps_in_reserve}, Rest: ${ex.rest_info}`
         );
@@ -297,7 +314,8 @@ Output as JSON exactly in this format:
 
 const planJson = JSON.parse(rawText);
 
-const pdfBuffer = await generatePdfBuffer(planJson);
+const customerName = req.body.name || "Client";
+const pdfBuffer = await generatePdfBuffer(planJson, customerName);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
