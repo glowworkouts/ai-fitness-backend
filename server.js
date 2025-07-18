@@ -24,7 +24,8 @@ const XLSX = require("xlsx");
 
 function generatePdfBuffer(planJson, customerName = "Client") {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument({ size: 'A4', margin: 50 });
+    const PDFDocument = require("pdfkit");
+    const doc = new PDFDocument({ size: "A4", margin: 50 });
     const buffers = [];
 
     doc.on("data", buffers.push.bind(buffers));
@@ -33,27 +34,28 @@ function generatePdfBuffer(planJson, customerName = "Client") {
       resolve(pdfData);
     });
 
-    // --- Title Page ---
-    doc.fontSize(26).fillColor("#000").text("Your Personalized Fitness Plan", {
-      align: "center",
-      underline: true
-    });
-    doc.moveDown(2);
-    doc.fontSize(20).text(`Prepared for: ${customerName}`, { align: "center" });
-    doc.moveDown();
-    doc.fontSize(16).text("Thank you for using Glow Workouts!", { align: "center" });
-    doc.moveDown(4);
-    doc.fontSize(12).text("This document contains a tailored 1-week workout plan created by our AI fitness assistant.", {
-      align: "center"
-    });
+    // Extract values
+    const monthYear = new Date().toLocaleString("default", { month: "long", year: "numeric" });
+    const clientName = planJson.name || customerName;
 
-    doc.addPage(); // ➕ Go to a new page after title
+    // --- Title Page (based on your design) ---
+    doc.fontSize(20).text(monthYear, { align: "center" });
 
-    // --- Actual Plan Content ---
-    doc.fontSize(20).text("Your 1-Week Workout Plan", { align: "center" });
-    doc.moveDown();
+    doc.moveDown(10);
 
-    const workouts = planJson.week_1.workouts;
+    doc.fontSize(28).text("Workout & Meal Plan", { align: "center" });
+    doc.moveDown(6);
+
+    doc.fontSize(14).text("Trainer: Personal Trainer AI", { align: "center" });
+    doc.text("Contact: personaltrainer@glowworkouts.com", { align: "center" });
+
+    doc.moveDown(3);
+    doc.fontSize(16).text(`Client Name: ${clientName}`, { align: "center" });
+
+    doc.addPage(); // ➕ New page for actual content
+
+    // --- Weekly Plan Content ---
+    const workouts = planJson.week_1?.workouts || [];
     workouts.forEach((workout) => {
       doc.fontSize(16).text(`Day: ${workout.day}`);
       workout.exercises.forEach((ex) => {
