@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -53,6 +53,12 @@ function generatePdfBuffer(planJson, customerName = "Client") {
     doc.fontSize(16).text(`Client Name: ${clientName}`, { align: "center" });
 
     doc.addPage(); // ➕ New page for actual content
+
+    // --- Health Overview Page ---
+doc.addPage();
+doc.fontSize(20).text("1. Client Health Overview", { align: "center" });
+doc.moveDown(2);
+doc.fontSize(12).text(healthText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -301,6 +307,36 @@ Output as JSON exactly in this format:
   }
 }
 `;
+const healthPrompt = `
+You are a professional fitness coach. Based on the client data below, generate a personal health overview using this fixed format. Use second-person point of view ("you", "your"). DO NOT change the structure — only fill in personalized insights based on data.
+
+Format (fill this out with real content):
+---
+\${customerName}, your general health condition is [insert conclusion]. You rated it as \${planJson.health_rating}/10 and your stress level as [e.g. moderate] (\${planJson.health_stress}/10).
+
+[Background summary — for example: You have a background in physical activity, enjoying sports such as \${planJson.training_history}. While you're familiar with gym training, it’s been irregular and without a fixed plan.]
+
+Your goal is: \${planJson.goals}.
+\${planJson.activity_level}
+
+[Injury summary — for example: Previous injuries include \${planJson.injuries}, which may cause discomfort during certain movements. Focus on proper form and stability.]
+
+Summary and training focus: [Based on your goals, background, and limitations, explain how the plan should be personalized for you.]
+---
+
+Client data:
+Name: \${name}
+Email: \${email}
+Health rating: \${health_rating}
+Stress level: \${health_stress}
+Training history: \${training_history}
+Goals: \${goals}
+Activity level: \${activity_level}
+Injuries: \${injuries}
+Weight: \${weight}
+Height: \${height}
+Nutrition: \${nutrition_preferences}
+`;
 
   try {
     const completion = await openai.chat.completions.create({
@@ -311,13 +347,23 @@ Output as JSON exactly in this format:
       ],
       temperature: 0.4
     });
+    const healthSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: healthPrompt }
+  ],
+  temperature: 0.4
+});
+
+const healthText = healthSummaryResponse.choices[0].message.content;
 
     const rawText = completion.choices[0].message.content;
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
