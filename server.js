@@ -308,43 +308,35 @@ Output as JSON exactly in this format:
 }
 `;
 const healthPrompt = `
-You are a professional fitness and health coach. Based on the client data below, generate a personal health overview in English using the exact structure and wording format below. Use the second-person perspective where needed ("you", "your"), and personalize all content based on the data provided. Do not invent missing data — if something is missing, write a neutral or general statement.
-
-Return only the following structure, filled in with real content:
+You are a professional fitness coach. Use the following client data to write a **Client Health Overview** following the exact structure below. Write in clear, natural English. Use "you"/"your" form, and fill in [bracketed GPT instructions] with natural, personalized text based on the client data.
 
 ---
-
 **Client Health Overview**
 
-${name} is a [based on "@{dob}" write age]-year-old. [GPT: What is the client's training background and experience? Write a conclusion. Example: You have been physically active your whole life, especially in extreme sports such as wakeboarding, surfing, snowboarding, and skateboarding — all practiced for over 15 years. While familiar with gym workouts, your training has been irregular and without a consistent plan. You are now highly motivated to train more regularly, preferably at fixed times with a personal trainer.]
+${name} is a [GPT calculate age based on ${dob}]-year-old. [What is the client's training background and experience? Write a conclusion based on: ${training_history}.] You are now motivated to train more regularly, preferably at fixed times following a personal plan. You prefer to workout ${training_times}.
 
 You rate your general health and stress level as ${health_stress}/10.
 
-Your goal is: ${goals}
+Your goal is [write natural text about goals based on ${name} and ${goals}].
 
-${name}'s daily activity level: ${activity_level}
+[Describe the client's daily activity level based on: ${activity_level}.]
 
-[GPT: Describe and analyze ${name}'s previous injuries from: ${injuries}. Include any cardiovascular conditions (${cardio_conditions}) or other factors (e.g., metabolic, hormonal, or respiratory) from: ${other_factors}. For example: Previous injuries such as a shoulder strain, knee surgery, and elbow fracture don’t cause daily pain but may cause discomfort during specific movements. Focus should be on proper form and injury prevention.]
+Previous injuries: [Describe naturally previous injuries based on: ${injuries}, ${cardio_conditions}, and ${other_factors}. Explain how they might affect training. Explain how this plan provides support and takes these into account.]
 
-[GPT: Based on the injury and health data, explain how the workout plan should accommodate and monitor these conditions.]
-
-[GPT: Write a summary and training considerations based on ${name}'s goals. For example: With a consistent training plan and a personalized approach, you can improve your overall fitness, strengthen muscles around past injury areas, and support your goals. Since you are highly motivated and enjoy working out, the plan will include variety and challenge to keep you engaged.]
-
+Summary and training considerations: [Write a natural summary and training recommendations based on ${name}'s goals and health background.]
 ---
 
-Client data:
-Name: ${name}
-Date of Birth: ${dob}
-Stress Level: ${health_stress}
-Training History: ${training_history}
-Activity Level: ${activity_level}
-Injuries: ${injuries}
-Cardio Conditions: ${cardio_conditions}
-Other Factors: ${other_factors}
-Goals: ${goals}
-Weight: ${weight}
-Height: ${height}
-Nutrition: ${nutrition_preferences}
+Client Data:
+- Name: ${name}
+- Date of Birth: ${dob}
+- Training Times: ${training_times}
+- Goals: ${goals}
+- Training History: ${training_history}
+- Activity Level: ${activity_level}
+- Injuries: ${injuries}
+- Cardio Conditions: ${cardio_conditions}
+- Other Factors: ${other_factors}
+- Health/Stress: ${health_stress}
 `;
 
   try {
