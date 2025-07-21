@@ -240,7 +240,19 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+function calculateAge(dob) {
+  if (!dob) return "";
+  // Expecting dob as "DD/MM/YYYY"
+  const [day, month, year] = dob.split("/");
+  const birthDate = new Date(`${year}-${month}-${day}`);
+  const diffMs = Date.now() - birthDate.getTime();
+  const ageDate = new Date(diffMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
 app.post("/generate-sample-plan", async (req, res) => {
+  console.log("BODY RECEIVED FROM LANDBOT:", req.body);
+  
   const {
     name,
     email,
@@ -259,6 +271,7 @@ app.post("/generate-sample-plan", async (req, res) => {
     height,
     nutrition_preferences
   } = req.body;
+  const age = calculateAge(dob);
 
   const prompt = `
 Client Information:
@@ -313,7 +326,7 @@ You are a professional fitness coach. Use the following client data to write a *
 ---
 **Client Health Overview**
 
-${name} is a [GPT calculate age based on ${dob}]-year-old. [What is the client's training background and experience? Write a conclusion based on: ${training_history}.] You are now motivated to train more regularly, preferably at fixed times following a personal plan. You prefer to workout ${training_times}.
+${name} is a ${age}-year-old. [What is the client's training background and experience? Write a conclusion based on: ${training_history}.] You are now motivated to train more regularly, preferably at fixed times following a personal plan. You prefer to workout ${training_times}.
 
 You rate your general health and stress level as ${health_stress}/10.
 
