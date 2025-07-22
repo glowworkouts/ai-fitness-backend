@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqPromp = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -75,6 +75,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.fontSize(20).text("2.4 Training Cycles", { align: "center" });
     doc.moveDown(2);
     doc.fontSize(12).text(cyclesText, { align: "left" });
+
+    // --- 2.5 Training Frequency ---
+    doc.addPage();
+    doc.fontSize(20).text("2.5 Training Frequency", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(freqText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -498,6 +504,32 @@ Client Data:
 Output ONLY valid Markdown. Do not add any extra text, explanations, or formatting outside of the provided structure.
 `;
 
+const freqPrompt = `
+You are a professional fitness coach. Using the following client data and previous plan sections, write the section **2.5 Training Frequency** for a long-term personalized training plan. Write in clear, friendly English. Focus on the client’s previous training habits, planned frequency, and how frequency will change during the mesocycles. Mention that deload weeks are included, and describe why.
+
+Client Data:
+- Name: ${name}
+- Date of Birth: ${dob}
+- Training Times: ${training_times}
+- Goals: ${goals}
+- Workout Preferences: ${workout_preferences}
+- Training History: ${training_history}
+- Health/Stress: ${health_stress}
+- Activity Level: ${activity_level}
+- Injuries: ${injuries}
+- Cardio Conditions: ${cardio_conditions}
+- Other Factors: ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition Preferences: ${nutrition_preferences}
+
+**Format your answer like this (in English):**
+
+**2.5 Training Frequency**
+
+[Begin with "${name}, ..." and then write a short summary of the client's previous training consistency and routine. Then explain how many sessions per week are planned at the start, and how this will progress during the plan. Mention that training weeks are organized into mesocycles, with planned deload weeks for recovery. Explain why this structure supports long-term progress and avoids overtraining. End with a short note that tests are done before/after deload weeks to track adaptation.]
+`;
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -547,13 +579,23 @@ const cyclesSummaryResponse = await openai.chat.completions.create({
 });
 const cyclesText = cyclesSummaryResponse.choices[0].message.content;
 
+const freqSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: freqPrompt }
+  ],
+  temperature: 0.4
+});
+const freqText = freqSummaryResponse.choices[0].message.content;
+
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqPrompt);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
