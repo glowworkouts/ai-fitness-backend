@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -69,6 +69,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.fontSize(20).text("2.3 Physical Fitness Tests for Progress Monitoring", { align: "center" });
     doc.moveDown(2);
     doc.fontSize(12).text(testsText, { align: "left" });
+
+    // --- 2.4 Training Cycles ---
+    doc.addPage();
+    doc.fontSize(20).text("2.4 Training Cycles", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(cyclesText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -448,6 +454,50 @@ Timing: [Description as above.]
 Output ONLY valid Markdown (no extra explanations).
 `;
 
+const cyclesPrompt = `
+You are a professional fitness coach. For this client, generate a section titled "2.4 Training Cycles". The training plan is always for 6 months.
+Give a time overview (in English) of cycles, with the length and focus of each mesocycle (4 weeks) and the macrocycle (6 months).
+Use the format shown in the example below. Adapt the goals and explanations for this specific client, using their actual data provided as "Client Data".
+Keep the content highly practical, personalized, and well-structured.
+
+EXAMPLE:
+2.4 Training Cycles  
+2.4.1 Overview of cycles and main goals for each Mesocycle (4 weeks) and Macrocycle (6 months):
+
+Macrocycle for this client is 6 months. It is divided into 6 mesocycles. 24 weeks in total, 6 different mesocycles.
+
+Mesocycle 1: [list main goals/focus for first 4 weeks, e.g. adaptation, technique, stability, according to client needs]
+Mesocycle 2: [list main goals/focus for next 4 weeks, e.g. increasing intensity, etc.]
+Mesocycle 3: ...
+...
+Mesocycle 6: ...
+
+Macrocycle main goals:
+- [Main goal 1 from previous client goals, must be relevant to this client]
+- [Main goal 2 ...]
+- [Add as many as needed]
+
+Client Data:
+- Name: ${name}
+- Email: ${email}
+- Date of birth: ${dob}
+- Service: ${service}
+- Training times: ${training_times}
+- Goals: ${goals}
+- Workout preferences: ${workout_preferences}
+- Training history: ${training_history}
+- Health/stress: ${health_stress}
+- Activity level: ${activity_level}
+- Injuries: ${injuries}
+- Cardiovascular conditions: ${cardio_conditions}
+- Other health factors: ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition preferences: ${nutrition_preferences}
+
+Output ONLY valid Markdown. Do not add any extra text, explanations, or formatting outside of the provided structure.
+`;
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -487,13 +537,23 @@ const testsSummaryResponse = await openai.chat.completions.create({
 });
 const testsText = testsSummaryResponse.choices[0].message.content;
 
+const cyclesSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: cyclesPrompt }
+  ],
+  temperature: 0.4
+});
+const cyclesText = cyclesSummaryResponse.choices[0].message.content;
+
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
