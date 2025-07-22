@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -38,7 +38,7 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "") {
     const monthYear = new Date().toLocaleString("default", { month: "long", year: "numeric" });
     const clientName = planJson.name || customerName;
 
-    // --- Title Page (based on your design) ---
+    // --- Title Page (already there) ---
     doc.fontSize(20).text(monthYear, { align: "center" });
 
     doc.moveDown(10);
@@ -52,13 +52,17 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "") {
     doc.moveDown(3);
     doc.fontSize(16).text(`Client Name: ${clientName}`, { align: "center" });
 
-    doc.addPage(); // ➕ New page for actual content
+    // --- 1. Client Health Overview ---
+    doc.addPage();
+    doc.fontSize(20).text("1. Client Health Overview", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(healthText, { align: "left" });
 
-    // --- Health Overview Page ---
-doc.addPage();
-doc.fontSize(20).text("1. Client Health Overview", { align: "center" });
-doc.moveDown(2);
-doc.fontSize(12).text(healthText, { align: "left" });
+    // --- 2. Client Goals & Training Focus ---
+    doc.addPage();
+    doc.fontSize(20).text("2. Client Goals & Training Focus", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(goalsText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -252,7 +256,7 @@ function calculateAge(dob) {
 
 app.post("/generate-sample-plan", async (req, res) => {
   console.log("BODY RECEIVED FROM LANDBOT:", req.body);
-  
+
   const {
     name,
     email,
@@ -352,6 +356,43 @@ Client Data:
 - Health/Stress: ${health_stress}
 `;
 
+const goalsPrompt = `
+You are a professional fitness coach. Based on the following client data, analyze their goals and health background, and write a section for a personalized plan (English).  
+Structure the answer in clear, personal language, and organize as shown below.  
+Be consistent with the health overview and use the client data.
+
+**Examples of physical abilities to improve:** muscle mass, basic strength, endurance, stability, explosiveness, flexibility, balance, mobility.  
+Always include at least 3 relevant abilities, and explain *why* these matter for this client.
+
+**Client Data:**
+- Name: ${name}
+- Date of birth: ${dob}
+- Training times: ${training_times}
+- Goals: ${goals}
+- Workout preferences: ${workout_preferences}
+- Training history: ${training_history}
+- Health/stress: ${health_stress}
+- Activity level: ${activity_level}
+- Injuries: ${injuries}
+- Cardio/metabolic/hormonal/other factors: ${cardio_conditions}, ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition preferences: ${nutrition_preferences}
+
+**Format your answer like this:**  
+**2. Client Goals and Training Focus**
+
+2.1 Client Goals
+- [Summarize all major client goals as bullet points, using client’s words, but make them SMART (Specific, Measurable, Achievable, Relevant, Timely) if possible.]
+- Within 6 months, you aim to see measurable progress in your key goals.
+
+2.2 Physical Abilities to Improve
+- [Physical ability #1]: [Explain why this is important for this client, based on their goals/history/injuries.]
+- [Physical ability #2]: [Explanation...]
+- [Physical ability #3]: [Explanation...]
+- [Add more if necessary]
+`
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -371,13 +412,22 @@ Client Data:
 });
 
 const healthText = healthSummaryResponse.choices[0].message.content;
+const goalsSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: goalsPrompt }
+  ],
+  temperature: 0.4
+});
+const goalsText = goalsSummaryResponse.choices[0].message.content;
 
     const rawText = completion.choices[0].message.content;
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
