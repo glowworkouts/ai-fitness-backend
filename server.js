@@ -421,13 +421,12 @@ const goalsSummaryResponse = await openai.chat.completions.create({
   ],
   temperature: 0.4
 });
+
+const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 const goalsText = goalsSummaryResponse.choices[0].message.content;
 
-    const rawText = completion.choices[0].message.content;
-
 const planJson = JSON.parse(rawText);
-console.log("AI rawText:", rawText);
 
 const customerName = req.body.name || "Client";
 const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText);
