@@ -69,7 +69,7 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.fontSize(20).text("2.3 Physical Fitness Tests for Progress Monitoring", { align: "center" });
     doc.moveDown(2);
     doc.fontSize(12).text(testsText, { align: "left" });
-    
+
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
     workouts.forEach((workout) => {
@@ -489,7 +489,6 @@ const testsText = testsSummaryResponse.choices[0].message.content;
 
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
-const goalsText = goalsSummaryResponse.choices[0].message.content;
 
 const planJson = JSON.parse(rawText);
 
