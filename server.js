@@ -393,6 +393,7 @@ Always include at least 3 relevant abilities, and explain *why* these matter for
 - [Add more if necessary]
 `
 
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -420,11 +421,13 @@ const goalsSummaryResponse = await openai.chat.completions.create({
   ],
   temperature: 0.4
 });
+console.log("AI rawText:", rawText);
 const goalsText = goalsSummaryResponse.choices[0].message.content;
 
     const rawText = completion.choices[0].message.content;
 
 const planJson = JSON.parse(rawText);
+console.log("AI rawText:", rawText);
 
 const customerName = req.body.name || "Client";
 const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText);
