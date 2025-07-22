@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -64,6 +64,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.moveDown(2);
     doc.fontSize(12).text(goalsText, { align: "left" });
 
+    // --- 2.3 Physical Fitness Tests for Progress Monitoring ---
+    doc.addPage();
+    doc.fontSize(20).text("2.3 Physical Fitness Tests for Progress Monitoring", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(testsText, { align: "left" });
+    
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
     workouts.forEach((workout) => {
@@ -393,6 +399,54 @@ Always include at least 3 relevant abilities, and explain *why* these matter for
 - [Add more if necessary]
 `
 
+const testsPrompt = `
+You are a professional fitness coach. For the following client, select 3 relevant physical tests for tracking progress. 
+The first test must always be: 
+- Bodyweight measurement (3x per week in the morning after first toilet visit).
+
+The other 2 tests should be strength/ability tests that are directly related to the main exercises planned for this client (choose based on their goals and planned workouts). 
+Describe each test as shown in the example: purpose, methodology, technical criteria, when to stop the test, and when to perform the test (timing).
+
+**Client Data:**
+- Name: ${name}
+- Date of Birth: ${dob}
+- Training Times: ${training_times}
+- Goals: ${goals}
+- Workout Preferences: ${workout_preferences}
+- Training History: ${training_history}
+- Activity Level: ${activity_level}
+- Injuries: ${injuries}
+- Cardiovascular Conditions: ${cardio_conditions}
+- Other Factors: ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition Preferences: ${nutrition_preferences}
+
+**Format your answer exactly like this (in English):**
+
+**2.3 Physical Fitness Tests for Progress Monitoring**
+
+Test 1 – Bodyweight measurement 3x/week  
+Purpose: To track body weight changes over time.  
+Method: Weigh yourself three times per week in the morning after the first toilet visit, before eating or drinking. Record the values and use the weekly average.  
+Timing: Every week, throughout the program.
+
+Test 2 – [Name of main exercise test, e.g. Deadlift 5-RM]  
+Purpose: [Describe what this test evaluates and why it is relevant for this client based on their goals/exercises.]  
+Method: [Step-by-step protocol for performing the test, including warm-up, increments, number of reps, and required equipment. Give clear, safe instructions.]  
+Technical criteria: [Describe how to maintain proper form and what is considered a successful repetition.]  
+Termination criteria: [List conditions under which the test must be stopped for safety or technical reasons.]  
+Timing: [When to perform the test: e.g. first week, after 4 weeks, after 8 weeks, etc.]
+
+Test 3 – [Name of another exercise test, e.g. Incline Dumbbell Press 5-RM]  
+Purpose: [Description as above.]  
+Method: [Description as above.]  
+Technical criteria: [Description as above.]  
+Termination criteria: [Description as above.]  
+Timing: [Description as above.]
+
+Output ONLY valid Markdown (no extra explanations).
+`;
 
   try {
     const completion = await openai.chat.completions.create({
@@ -421,6 +475,17 @@ const goalsSummaryResponse = await openai.chat.completions.create({
   ],
   temperature: 0.4
 });
+const goalsText = goalsSummaryResponse.choices[0].message.content;
+
+const testsSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: testsPrompt }
+  ],
+  temperature: 0.4
+});
+const testsText = testsSummaryResponse.choices[0].message.content;
 
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
@@ -429,7 +494,7 @@ const goalsText = goalsSummaryResponse.choices[0].message.content;
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
