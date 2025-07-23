@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "", programIntroText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -87,6 +87,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.fontSize(20).text("2.6 Plan Summary", { align: "center" });
     doc.moveDown(2);
     doc.fontSize(12).text(summaryText, { align: "left" });
+
+    // --- 3. Training Program & Exercises (programIntroText) ---
+    doc.addPage();
+    doc.fontSize(20).text("3. Training Program & Exercises", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(programIntroText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -569,6 +575,37 @@ You are a professional fitness coach. Based on the following client data and all
 Output ONLY valid Markdown (no extra explanations).
 `;
 
+const programIntroPrompt = `
+You are a professional fitness coach. Based on the following client data and all previous sections (goals, health overview, training cycles, etc.), write a highly personal introduction to the training program for the client, using clear and encouraging English. Cover the following:
+
+- Why this training program structure is selected for this client (link to their goals, needs, background, injuries, etc.).
+- What are the main focuses of the plan (strength, mass, explosiveness, stability, injury prevention, etc.), with examples from client info.
+- How the workouts are structured per week (number of days, main session types, focus days, etc.).
+- Why certain exercises and progressions are chosen (mention if base lifts, explosive work, etc.).
+- Explain the progression approach (mesocycles, gradual progression, rest, and deloads).
+- How the client should use the plan: day-to-day, paying attention to form, rest, adjusting loads, and listening to the body.
+- Reinforce that the program is made for their lifestyle and goals.
+
+Personalize every paragraph and use the client's name (${name}) throughout. Do **not** repeat previous sections word-for-word; instead, give new context and motivation, as a personal message.
+
+**Client Data:**
+- Name: ${name}
+- Date of Birth: ${dob}
+- Training times: ${training_times}
+- Goals: ${goals}
+- Workout preferences: ${workout_preferences}
+- Training history: ${training_history}
+- Health/stress: ${health_stress}
+- Activity level: ${activity_level}
+- Injuries: ${injuries}
+- Cardio/metabolic/hormonal/other factors: ${cardio_conditions}, ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition preferences: ${nutrition_preferences}
+
+**Format your answer as a motivational, friendly introduction to the next section of the plan.**
+`;
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -638,13 +675,23 @@ const summarySummaryResponse = await openai.chat.completions.create({
 });
 const summaryText = summarySummaryResponse.choices[0].message.content;
 
+const programIntroResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: programIntroPrompt }
+  ],
+  temperature: 0.4
+});
+const programIntroText = programIntroResponse.choices[0].message.content;
+
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText, programIntroText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
