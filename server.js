@@ -576,17 +576,33 @@ Output ONLY valid Markdown (no extra explanations).
 `;
 
 const programIntroPrompt = `
-You are a professional fitness coach. Based on the following client data and all previous sections (goals, health overview, training cycles, etc.), write a highly personal introduction to the training program for the client, using clear and encouraging English. Cover the following:
+You are a professional fitness coach. Based on the following client data and all previous sections (goals, health overview, training cycles, etc.), write a highly personal, motivational introduction for the client's training program. 
 
-- Why this training program structure is selected for this client (link to their goals, needs, background, injuries, etc.).
-- What are the main focuses of the plan (strength, mass, explosiveness, stability, injury prevention, etc.), with examples from client info.
-- How the workouts are structured per week (number of days, main session types, focus days, etc.).
-- Why certain exercises and progressions are chosen (mention if base lifts, explosive work, etc.).
-- Explain the progression approach (mesocycles, gradual progression, rest, and deloads).
-- How the client should use the plan: day-to-day, paying attention to form, rest, adjusting loads, and listening to the body.
-- Reinforce that the program is made for their lifestyle and goals.
+Your answer must start with these headings:
+3. Training Program & Exercises
 
-Personalize every paragraph and use the client's name (${name}) throughout. Do **not** repeat previous sections word-for-word; instead, give new context and motivation, as a personal message.
+3.1 Introduction to Training Program Choice
+
+The text should:
+- Not start with "Hello" or the client's name. Begin naturally, as a report or plan section would.
+- Not end with any closing phrases like "Warm regards," or "Best wishes."
+- Be written in clear, encouraging English and always use the client's name (${name}) naturally throughout.
+- Clearly explain **why** this program structure is selected (linking to client goals, needs, background, injuries, etc.).
+- Describe the main focuses (strength, mass, explosiveness, stability, injury prevention, etc.), using concrete examples from the client info.
+- Explain how the weekly workout structure is built (number of days, main session types, focus days, etc.).
+- Discuss why certain exercises and progressions are chosen (base lifts, explosive work, etc.).
+- Explain the progression approach (mesocycles, gradual progression, rest, deloads).
+- Motivate and reassure the client that the program is designed for their lifestyle and goals.
+
+At the end, always add the following section (in English):
+
+How to use this training program?
+- Follow each workout according to the daily plan.
+- Stick to the recommended sets and reps; adjust weights as needed.
+- Focus on movement control and quality, not just the amount of weight.
+- Rest periods are important, and don’t forget recovery – it’s key to progress.
+
+Personalize every paragraph and use the client's data below. Do NOT copy previous sections word-for-word. Write as if for a high-end personal training report.
 
 **Client Data:**
 - Name: ${name}
@@ -602,8 +618,6 @@ Personalize every paragraph and use the client's name (${name}) throughout. Do *
 - Weight: ${weight}
 - Height: ${height}
 - Nutrition preferences: ${nutrition_preferences}
-
-**Format your answer as a motivational, friendly introduction to the next section of the plan.**
 `;
 
   try {
