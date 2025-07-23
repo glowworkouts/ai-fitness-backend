@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -81,6 +81,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.fontSize(20).text("2.5 Training Frequency", { align: "center" });
     doc.moveDown(2);
     doc.fontSize(12).text(freqText, { align: "left" });
+
+    // --- 2.6 Plan Summary ---
+    doc.addPage();
+    doc.fontSize(20).text("2.6 Plan Summary", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(summaryText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -530,6 +536,39 @@ Client Data:
 [Begin with "${name}, ..." and then write a short summary of the client's previous training consistency and routine. Then explain how many sessions per week are planned at the start, and how this will progress during the plan. Mention that training weeks are organized into mesocycles, with planned deload weeks for recovery. Explain why this structure supports long-term progress and avoids overtraining. End with a short note that tests are done before/after deload weeks to track adaptation.]
 `;
 
+const summaryPrompt = `
+You are a professional fitness coach. Based on the following client data and all previous plan sections (goals, tests, cycles, training frequency, and health overview), write a comprehensive summary for the client plan, in fluent English.
+
+**Instructions:**
+- Start the summary with: "${name}, your training plan focuses on..." (summarize main goals in the first paragraph).
+- List the main goals and focus areas for the next 6 months as bullet points.
+- Explain the general plan structure (cycles, mesocycles, deload weeks, weekly routine).
+- Add training principles used in this plan (specificity, individuality, progressive overload, recovery, etc.).
+- Address special considerations for this client (e.g. injuries, imbalances, preferences, sports-specific needs, etc.).
+- Summarize the client's weekly training schedule (for example: which days are for strength, which days are for cardio, and typical rest days), in clear and easy-to-understand text.
+- Conclude with how the plan adapts over time and ensures steady progress.
+- Make sure this section feels personal and references the client's real goals, limitations, and routine.
+
+**Client Data:**
+- Name: ${name}
+- Email: ${email}
+- Date of birth: ${dob}
+- Service: ${service}
+- Training times: ${training_times}
+- Goals: ${goals}
+- Workout preferences: ${workout_preferences}
+- Training history: ${training_history}
+- Health/stress: ${health_stress}
+- Activity level: ${activity_level}
+- Injuries: ${injuries}
+- Cardio/metabolic/hormonal/other factors: ${cardio_conditions}, ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition preferences: ${nutrition_preferences}
+
+Output ONLY valid Markdown (no extra explanations).
+`;
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -589,13 +628,23 @@ const freqSummaryResponse = await openai.chat.completions.create({
 });
 const freqText = freqSummaryResponse.choices[0].message.content;
 
+const summarySummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: summaryPrompt }
+  ],
+  temperature: 0.4
+});
+const summaryText = summarySummaryResponse.choices[0].message.content;
+
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
