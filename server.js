@@ -106,8 +106,8 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.moveDown(2);
     doc.fontSize(12).text(termsText, { align: "left" });
 
-    doc.fontSize(12).text(termsText, { align: "left" }); // See on GPT kirjutatud üldinfo, see võib jääda
 
+    
     doc.moveDown(1); // Lisa tühja ruumi
 
     // --- Lisa klikitavad lingid ---
