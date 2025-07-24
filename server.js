@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "", programIntroText = "", nutritionText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "", programIntroText = "", nutritionText = "", termsText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -99,6 +99,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.fontSize(20).text("4. Nutrition", { align: "center" });
     doc.moveDown(2);
     doc.fontSize(12).text(nutritionText, { align: "left" });
+
+    // --- 5. Working Terms and Contact Information ---
+    doc.addPage();
+    doc.fontSize(20).text("5. Working Terms and Contact Information", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(termsText, { align: "left" });
 
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
@@ -666,7 +672,7 @@ Add the following note in the plan:
 
 **In section 4.5, always include these points as a bullet list (in English, tailored for the client):**
 - Track your macros using a nutrition app (like MyFitnessPal, CalAI, or Excel), especially in the beginning.
-- Eat regularly: 3 main meals + 2–3 snacks per day. For example:
+- Eat regularly: 3 main meals + 2–3 snacks per day. Also, always add this example meal timing schedule (exactly as shown, do not remove any times):
    - Breakfast 8:30
    - Snack 10:30
    - Lunch 12:30
@@ -682,6 +688,48 @@ Add the following note in the plan:
 - Avoid frequent snacking and long periods without food – keep regular meal times.
 - Nutrition and sleep are as important as training – proper recovery leads to better results.
 - This plan is designed to help you build sustainable nutrition habits for long-term progress.
+
+**Client Data:**
+- Name: ${name}
+- Email: ${email}
+- Date of Birth: ${dob}
+- Gender: ${gender}
+- Service Requested: ${service}
+- Preferred Training Times: ${training_times}
+- Goals: ${goals}
+- Preferred/Disliked Workouts: ${workout_preferences}
+- Training History and Experience: ${training_history}
+- Health & Stress Level: ${health_stress}
+- Daily Activity Level: ${activity_level}
+- Injuries/Pain: ${injuries}
+- Cardiovascular Conditions: ${cardio_conditions}
+- Other Health Factors: ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition Preferences/Intolerances: ${nutrition_preferences}
+`;
+
+const termsPrompt = `
+You are a professional fitness coach. Write Section 5 for the client's PDF plan using the following structure, in clear, natural English. Personalize with the client's info (name, email, training times, etc).
+
+**5. Working Terms and Contact Information**
+
+**5.1 Overview of Working Methods**  
+${name} is expected to follow this training plan (6 months) and the exercise program (either the 1-week sample or full 6-week plan) independently at their selected training times: ${training_times}. It is highly recommended for the client to join our community group on Facebook (https://www.facebook.com/groups/696376651906905) or WhatsApp (https://chat.whatsapp.com/LKmO2WMNfd01nzMyqtBZLn?mode=r_c); the links can be found below in section 5.2. For questions, you may write in the community group or by email to personaltrainer@glowworkouts.com.
+
+**5.2 Communication Channels and Access**
+
+- Training and nutrition plan: Google Sheets link (sent by email, includes week 1 sample)
+- Recommended apps: CalAI, MyFitnessPal
+- Join our Private Community WhatsApp Group: https://chat.whatsapp.com/LKmO2WMNfd01nzMyqtBZLn?mode=r_c
+- Join Our Facebook Public Community Group: https://www.facebook.com/groups/696376651906905
+- Email: personaltrainer@glowworkouts.com
+- Glow Workouts Online fitness library: https://studio.glowworkouts.com/browse
+- Client: ${name} (${email})
+
+**5.3 Other Terms**
+
+The training plan lasts for 6 months. The sample 1-week workout plan is free, while the 6-week full plan is available for €30. After each 6-week period, you can request a new personalized workout program from Personal Trainer AI, based on your existing plan and your progress, until you complete the 6-month training journey.
 
 **Client Data:**
 - Name: ${name}
@@ -792,13 +840,23 @@ const nutritionSummaryResponse = await openai.chat.completions.create({
 });
 const nutritionText = nutritionSummaryResponse.choices[0].message.content;
 
+const termsSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: termsPrompt }
+  ],
+  temperature: 0.4
+});
+const termsText = termsSummaryResponse.choices[0].message.content;
+
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText, programIntroText, nutritionText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText, programIntroText, nutritionText, termsText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
