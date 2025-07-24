@@ -106,6 +106,29 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.moveDown(2);
     doc.fontSize(12).text(termsText, { align: "left" });
 
+    doc.fontSize(12).text(termsText, { align: "left" }); // See on GPT kirjutatud üldinfo, see võib jääda
+
+    doc.moveDown(1); // Lisa tühja ruumi
+
+    // --- Lisa klikitavad lingid ---
+    doc.fontSize(12).fillColor('blue').text(
+    "Join our Private Community WhatsApp Group",
+    { link: "https://chat.whatsapp.com/LKmO2WMNfd01nzMyqtBZLn?mode=r_c", underline: true }
+);
+    doc.moveDown(0.2);
+    doc.text(
+    "Join Our Facebook Public Community Group",
+    { link: "https://www.facebook.com/groups/696376651906905", underline: true }
+);
+    doc.moveDown(0.2);
+    doc.text(
+    "Glow Workouts Online fitness library",
+    { link: "https://studio.glowworkouts.com/browse", underline: true }
+);
+
+doc.moveDown(0.2);
+doc.font('Helvetica').fillColor('black'); // Jäta tavaline tekst edasi mustaks
+
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
     workouts.forEach((workout) => {
