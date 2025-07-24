@@ -22,7 +22,7 @@ const openai = new OpenAI({
 const PDFDocument = require("pdfkit");
 const XLSX = require("xlsx");
 
-function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "", programIntroText = "") {
+function generatePdfBuffer(planJson, customerName = "Client", healthText = "", goalsText = "", testsText = "", cyclesText = "", freqText = "", summaryText = "", programIntroText = "", nutritionText = "") {
   return new Promise((resolve, reject) => {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -94,6 +94,12 @@ function generatePdfBuffer(planJson, customerName = "Client", healthText = "", g
     doc.moveDown(2);
     doc.fontSize(12).text(programIntroText, { align: "left" });
 
+    // --- 4. Nutrition ---
+    doc.addPage();
+    doc.fontSize(20).text("4. Nutrition", { align: "center" });
+    doc.moveDown(2);
+    doc.fontSize(12).text(nutritionText, { align: "left" });
+
     // --- Weekly Plan Content ---
     const workouts = planJson.week_1?.workouts || [];
     workouts.forEach((workout) => {
@@ -140,6 +146,7 @@ const {
   name,
   email,
   dob,
+  gender,
   service,
   training_times,
   goals,
@@ -291,6 +298,7 @@ app.post("/generate-sample-plan", async (req, res) => {
     name,
     email,
     dob,
+    gender,
     service,
     training_times,
     goals,
@@ -620,6 +628,81 @@ Personalize every paragraph and use the client's data below. Do NOT copy previou
 - Nutrition preferences: ${nutrition_preferences}
 `;
 
+const nutritionPrompt = `
+You are a professional fitness coach and sports nutritionist. Using the client data below and all previous sections (goals, bodyweight, height, age, etc.), write a highly personalized "Nutrition" section for a training plan, in clear English. Use exact calculations (Mifflin-St Jeor formula) and tailor everything to the client's data.
+
+Your output must be formatted as follows, including **section numbers and titles exactly**:
+
+4. Nutrition
+
+4.1 Caloric Needs (BMR & TDEE)
+- Calculate BMR using the correct Mifflin-St Jeor formula for gender (male or female):
+   Use this formula:
+For men: BMR = 10 × weight (kg) + 6.25 × height (cm) – 5 × age (years) + 5
+For women: BMR = 10 × weight (kg) + 6.25 × height (cm) – 5 × age (years) – 161
+Use the client's gender to select the correct formula.
+- For "Non-binary", "Other", or "Prefer not to say": calculate and show both, or explain that both formulas are provided due to limitations in current BMR calculations.
+Use the client's stated gender for correct formula.
+If the client's gender is "Non-binary", "Other", or "Prefer not to say":
+Add the following note in the plan:
+“BMR values are calculated using both the male and female formulas, as the standard formulas are binary. Please choose the value you feel best represents your physiology, or use the average.”
+- Explain the calculation with the client's own values (show the calculation).
+- Multiply BMR by an appropriate activity factor (PAL), based on the client's reported activity level, and give a TDEE calculation.
+- State the recommended calorie range for their goal (e.g., for weight gain or loss).
+
+4.2 Recommended Macros per Day
+- Based on the calorie target, provide recommended daily intake ranges for protein (g), fat (g), and carbohydrates (g).
+- Use ranges typical for the goal (e.g., muscle gain: 1.8-2.2g protein per kg, 1-1.2g fat per kg, rest carbs).
+
+4.3 Nutrition Preferences & Intolerances
+- List any nutrition preferences, intolerances, or special dietary needs (from client data).
+- If none, state that clearly.
+
+4.4 How to Track Your Nutrition
+- Give a short guide about how and why to track calories and macros, with app recommendations (CalAI, MyFitnessPal, etc.).
+- Suggest practical tips for self-monitoring, e.g., food scale, product labels, Excel, etc.
+
+4.5 General Tips & Recommendations
+
+**In section 4.5, always include these points as a bullet list (in English, tailored for the client):**
+- Track your macros using a nutrition app (like MyFitnessPal, CalAI, or Excel), especially in the beginning.
+- Eat regularly: 3 main meals + 2–3 snacks per day. For example:
+   - Breakfast 8:30
+   - Snack 10:30
+   - Lunch 12:30
+   - Snack 15:00
+   - Dinner 17:30
+   - Snack 20:00
+- Add protein to every meal, including breakfast (eggs, protein powder, chicken, cottage cheese, etc.).
+- Eat carbohydrates and fats before and after training to support performance and recovery.
+- Within 30–60 minutes after training, have a protein-rich meal or smoothie (e.g., protein + banana).
+- Use easy, energy-dense snacks: nuts, protein yogurt, bars, etc.
+- Drink at least 30–35 ml of water per kg body weight per day; avoid drinking large amounts with meals.
+- Your daily macro split does not need to be perfect – focus on weekly consistency.
+- Avoid frequent snacking and long periods without food – keep regular meal times.
+- Nutrition and sleep are as important as training – proper recovery leads to better results.
+- This plan is designed to help you build sustainable nutrition habits for long-term progress.
+
+**Client Data:**
+- Name: ${name}
+- Email: ${email}
+- Date of Birth: ${dob}
+- Gender: ${gender}
+- Service Requested: ${service}
+- Preferred Training Times: ${training_times}
+- Goals: ${goals}
+- Preferred/Disliked Workouts: ${workout_preferences}
+- Training History and Experience: ${training_history}
+- Health & Stress Level: ${health_stress}
+- Daily Activity Level: ${activity_level}
+- Injuries/Pain: ${injuries}
+- Cardiovascular Conditions: ${cardio_conditions}
+- Other Health Factors: ${other_factors}
+- Weight: ${weight}
+- Height: ${height}
+- Nutrition Preferences/Intolerances: ${nutrition_preferences}
+`;
+
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -699,13 +782,23 @@ const programIntroResponse = await openai.chat.completions.create({
 });
 const programIntroText = programIntroResponse.choices[0].message.content;
 
+const nutritionSummaryResponse = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful fitness assistant." },
+    { role: "user", content: nutritionPrompt }
+  ],
+  temperature: 0.4
+});
+const nutritionText = nutritionSummaryResponse.choices[0].message.content;
+
 const rawText = completion.choices[0].message.content;
 console.log("AI rawText:", rawText);
 
 const planJson = JSON.parse(rawText);
 
 const customerName = req.body.name || "Client";
-const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText, programIntroText);
+const pdfBuffer = await generatePdfBuffer(planJson, customerName, healthText, goalsText, testsText, cyclesText, freqText, summaryText, programIntroText, nutritionText);
 const excelBuffer = generateExcelBuffer(planJson);
 
     // Send email with the generated plan
@@ -750,6 +843,7 @@ app.post("/generate-full-plan", async (req, res) => {
     name,
     email,
     dob,
+    gender,
     service,
     training_times,
     goals,
