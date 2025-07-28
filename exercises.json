@@ -1,27 +1,1200 @@
 [
   {
-    "id": "db_bench_press",
-    "name": "Dumbbell Bench Press",
-    "equipment": ["dumbbells"],
-    "difficulty": "intermediate",
-    "target_muscles": ["chest", "triceps"],
-    "contraindications": []
+    "id": "warmup_arm_circles",
+    "name": "Arm Circles",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["shoulders"],
+    "instructions": "Circle arms forward and backward to mobilize the shoulder joints."
   },
   {
-    "id": "goblet_squat",
-    "name": "Goblet Squat",
-    "equipment": ["dumbbells"],
-    "difficulty": "beginner",
-    "target_muscles": ["legs", "glutes"],
-    "contraindications": ["knee_pain"]
+    "id": "warmup_shoulder_rolls",
+    "name": "Shoulder Rolls",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["shoulders", "upper back"],
+    "instructions": "Roll shoulders forward and backward in a circular motion."
   },
   {
-    "id": "plank",
-    "name": "Plank",
-    "equipment": ["bodyweight"],
-    "difficulty": "beginner",
-    "target_muscles": ["core"],
-    "contraindications": []
+    "id": "warmup_dynamic_side_lunges",
+    "name": "Dynamic Side Lunges",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hips", "groin", "legs"],
+    "instructions": "Step side to side in a lunge motion to warm up hips and groin."
+  },
+  {
+    "id": "warmup_cat_cow",
+    "name": "Cat-Cow Stretch",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["spine", "back", "core"],
+    "instructions": "Alternate between arching and rounding your back on all fours."
+  },
+  {
+    "id": "warmup_high_knees",
+    "name": "High Knees",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["legs", "core"],
+    "instructions": "Jog in place, lifting knees as high as possible."
+  },
+  {
+    "id": "warmup_butt_kicks",
+    "name": "Butt Kicks",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["legs", "hamstrings"],
+    "instructions": "Jog in place, kicking heels toward glutes."
+  },
+  {
+    "id": "warmup_torso_twists",
+    "name": "Torso Twists",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["core", "spine"],
+    "instructions": "Stand tall and rotate your torso left and right."
+  },
+  {
+    "id": "warmup_leg_swings",
+    "name": "Standing Leg Swings",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["legs", "hips"],
+    "instructions": "Swing one leg front to back and side to side to mobilize the hips."
+  },
+  {
+    "id": "warmup_jumping_jacks",
+    "name": "Jumping Jacks",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["full body"],
+    "instructions": "Jump legs out and raise arms overhead, then return to start."
+  },
+  {
+    "id": "warmup_arm_swings",
+    "name": "Arm Swings Across Chest",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["shoulders", "rear delts"],
+    "instructions": "Swing arms horizontally across chest to stretch the shoulders."
+  },
+  {
+    "id": "warmup_bird_dog_hip_circles",
+    "name": "Bird Dog Hip Circles",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hips", "core"],
+    "instructions": "On all fours, circle one leg in a big motion to mobilize the hip."
+  },
+  {
+    "id": "warmup_inchworm_walkout",
+    "name": "Inchworm Walkout",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["full body", "core", "shoulders"],
+    "instructions": "From standing, walk hands out to plank and back to standing."
+  },
+  {
+    "id": "warmup_worlds_greatest_stretch",
+    "name": "World’s Greatest Stretch (Low Lunge Torso Twist)",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["full body", "hips", "thoracic spine"],
+    "instructions": "Step into a low lunge, reach and twist torso toward front leg."
+  },
+  {
+    "id": "warmup_ankle_bounces",
+    "name": "Ankle Bounces",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["calves", "ankles"],
+    "instructions": "Quickly hop on the balls of the feet to warm up the calves and ankles."
+  },
+  {
+    "id": "warmup_squat_to_stand",
+    "name": "Squat to Stand (Hamstring Forward Fold)",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hamstrings", "hips", "back"],
+    "instructions": "Deep squat, then fold forward to stretch the hamstrings and lower back."
+  },
+  {
+    "id": "warmup_wrist_rolls",
+    "name": "Wrist Rolls",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["wrists", "forearms"],
+    "instructions": "Rotate wrists gently in circular motions."
+  },
+  {
+    "id": "warmup_neck_rolls",
+    "name": "Neck Rolls",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["neck"],
+    "instructions": "Gently roll neck in a circular motion."
+  },
+  {
+    "id": "warmup_elbow_circles",
+    "name": "Elbow Circles",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["elbows", "arms"],
+    "instructions": "Circle elbows to loosen and warm up the joint."
+  },
+  {
+    "id": "warmup_walking_lunges",
+    "name": "Walking Lunges",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["legs", "glutes"],
+    "instructions": "Lunge forward alternating legs to warm up the lower body."
+  },
+  {
+    "id": "warmup_toe_touches",
+    "name": "Full Extension to Toe Touches",
+    "type": "warm-up",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hamstrings", "back"],
+    "instructions": "Reach arms overhead, then bend down to touch toes, repeat dynamically."
   }
 ]
+[
+  {
+    "id": "shoulder_dumbbell_front_raise",
+    "name": "Dumbbell Front Raise",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "anterior deltoid"],
+    "instructions": "Stand upright with a dumbbell in each hand at your sides. Raise the dumbbells in front of you to shoulder height with straight arms. Lower slowly. Do not use momentum."
+  },
+  {
+    "id": "shoulder_dumbbell_lateral_raise",
+    "name": "Dumbbell Lateral Raise",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "lateral deltoid"],
+    "instructions": "Hold a dumbbell in each hand at your sides. Keeping your arms straight, lift the dumbbells out to your sides until they reach shoulder height. Pause and lower slowly."
+  },
+  {
+    "id": "shoulder_dumbbell_rear_delt_fly",
+    "name": "Dumbbell Rear Delt Fly",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "posterior deltoid", "upper back"],
+    "instructions": "Hinge forward at the hips, keeping your back flat. Hold dumbbells below shoulders, then raise your arms wide to the sides. Squeeze shoulder blades together. Lower slowly."
+  },
+  {
+    "id": "shoulder_arnold_press",
+    "name": "Arnold Press",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "all deltoids"],
+    "instructions": "Start seated with dumbbells in front of shoulders, palms facing you. As you press overhead, rotate palms to face forward. Reverse on the way down."
+  },
+  {
+    "id": "shoulder_upright_row",
+    "name": "Upright Row",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "traps", "lateral deltoid"],
+    "instructions": "Stand holding dumbbells in front of thighs. Pull the dumbbells up along your body to chest height, keeping elbows higher than wrists. Lower slowly."
+  },
+  {
+    "id": "shoulder_press",
+    "name": "Shoulder Press",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "all deltoids", "triceps"],
+    "instructions": "Sit or stand with dumbbells at shoulder height, palms facing forward. Press the dumbbells overhead until arms are straight, then lower with control."
+  },
+  {
+    "id": "shoulder_incline_bench_y_raise",
+    "name": "Incline Bench Y-Raise",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["shoulders", "posterior deltoid", "upper back"],
+    "instructions": "Lie chest-down on an incline bench, arms hanging. With light dumbbells, raise arms overhead in a 'Y' shape, keeping thumbs up. Lower slowly."
+  },
+  {
+    "id": "shoulder_dumbbell_around_world",
+    "name": "Dumbbell Around the World",
+    "type": "strength",
+    "equipment": "Dumbbells, Flat Bench",
+    "muscle_groups": ["shoulders", "all deltoids", "chest"],
+    "instructions": "Lie on your back on a bench holding dumbbells at thighs. Sweep arms out and up in a wide circle to overhead, then back down."
+  },
+  {
+    "id": "shoulder_db_clean_and_press",
+    "name": "Dumbbell Clean and Press",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["shoulders", "full body", "deltoids", "legs"],
+    "instructions": "Hold dumbbells at your sides. Dip slightly, then explosively pull dumbbells to shoulders (clean), then press overhead. Lower and repeat."
+  }
+]
+[
+  {
+    "id": "trap_prone_y_raise_incline",
+    "name": "Prone Y Raise on Incline",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["trapezius", "lower traps"],
+    "instructions": "Lie chest-down on an incline bench, arms extended overhead in a 'Y'. Raise arms upward, keeping thumbs up, pause, then lower slowly."
+  },
+  {
+    "id": "trap_prone_t_raise_incline",
+    "name": "Prone T Raise on Incline",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["trapezius", "middle traps"],
+    "instructions": "Lie chest-down on an incline bench, arms extended to sides in a 'T'. Raise arms up, squeeze shoulder blades, then lower."
+  },
+  {
+    "id": "trap_prone_w_raise_bench",
+    "name": "Prone W Raise on Bench",
+    "type": "strength",
+    "equipment": "Dumbbells, Flat Bench",
+    "muscle_groups": ["trapezius", "middle traps", "lower traps"],
+    "instructions": "Lie face down on a bench, arms bent like a 'W'. Squeeze shoulder blades and lift arms off the bench, then lower."
+  },
+  {
+    "id": "trap_face_pull_db",
+    "name": "Face Pull with Dumbbells",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["trapezius", "upper traps", "middle traps", "rear deltoid"],
+    "instructions": "Stand holding dumbbells at shoulder height. Pull elbows high and back, dumbbells toward your face. Squeeze shoulder blades together."
+  },
+  {
+    "id": "trap_scaptions_shrug",
+    "name": "Dumbbell Scaption Shrug",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["trapezius", "upper traps", "middle traps"],
+    "instructions": "Hold dumbbells at your sides. Raise arms diagonally (30° from front), then shrug shoulders at the top. Lower and repeat."
+  },
+  {
+    "id": "trap_pullup_hold",
+    "name": "Pull-Up Hold",
+    "type": "strength",
+    "equipment": "Pull-Up Bar",
+    "muscle_groups": ["trapezius", "upper traps", "middle traps", "lats"],
+    "instructions": "Hang from a pull-up bar and pull up until chin is above the bar. Hold the top position as long as possible, keeping shoulders engaged."
+  },
+  {
+    "id": "trap_pullup_shrug",
+    "name": "Pull-Up Shrug",
+    "type": "strength",
+    "equipment": "Pull-Up Bar",
+    "muscle_groups": ["trapezius", "middle traps"],
+    "instructions": "Hang from a pull-up bar. Without bending elbows, pull shoulder blades down and together, raising your body slightly. Lower slowly."
+  }
+]
+[
+  {
+    "id": "serratus_db_punch",
+    "name": "DB Serratus Punch",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["serratus anterior"],
+    "instructions": "Lie on a bench or stand. Hold dumbbells at shoulders and punch forward, protracting scapula at the top."
+  },
+  {
+    "id": "serratus_uppercut_punch",
+    "name": "Dumbbell Uppercut Punches",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["serratus anterior"],
+    "instructions": "Stand holding dumbbells. Punch upward in an uppercut motion, engaging serratus on each rep."
+  },
+  {
+    "id": "serratus_high_plank_protraction",
+    "name": "High Plank Protraction",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["serratus anterior", "core"],
+    "instructions": "From high plank, push the floor away at the top, spreading shoulder blades apart. Hold, then relax and repeat."
+  },
+  {
+    "id": "serratus_oh_db_hold",
+    "name": "Overhead DB Hold with Protraction",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["serratus anterior", "shoulders"],
+    "instructions": "Hold dumbbells overhead. At the top, reach arms further upward, protracting the scapula."
+  },
+  {
+    "id": "serratus_tall_kneel_db_press",
+    "name": "Tall Kneeling DB Press with Protraction",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["serratus anterior", "shoulders"],
+    "instructions": "In tall kneeling, press dumbbells overhead and punch slightly upward at the top, engaging serratus."
+  }
+]
+[
+  {
+    "id": "rhomboid_incline_t_raise",
+    "name": "Incline Bench T Raise",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["rhomboids", "middle traps"],
+    "instructions": "Lie chest down on an incline bench. Raise arms to the sides (T shape) and squeeze shoulder blades together."
+  },
+  {
+    "id": "rhomboid_reverse_fly",
+    "name": "Dumbbell Reverse Fly",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["rhomboids", "rear deltoids"],
+    "instructions": "Bend forward at hips, hold dumbbells. Open arms out wide, focusing on scapular squeeze."
+  },
+  {
+    "id": "rhomboid_face_pull_db",
+    "name": "Face Pull with Dumbbells",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["rhomboids", "middle traps"],
+    "instructions": "Hold dumbbells, pull toward face with elbows high, squeezing shoulder blades together."
+  },
+  {
+    "id": "rhomboid_prone_row",
+    "name": "Prone Row on Bench",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["rhomboids", "middle traps"],
+    "instructions": "Lie face down on a bench, row dumbbells to ribcage, pinching shoulder blades at top."
+  },
+  {
+    "id": "rhomboid_bent_over_row_neutral",
+    "name": "Bent-Over DB Row (Neutral Grip)",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["rhomboids", "middle back"],
+    "instructions": "With a flat back, hold dumbbells, palms facing each other. Row dumbbells to hips, focusing on scapular retraction."
+  }
+]
+[
+  {
+    "id": "lats_db_row_single",
+    "name": "Dumbbell Row (Single Arm)",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["lats", "mid back"],
+    "instructions": "Place one hand and knee on bench, pull dumbbell to hip, keeping elbow close to body."
+  },
+  {
+    "id": "lats_bent_over_row_double",
+    "name": "Bent-Over Row (Double Arm)",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["lats", "mid back"],
+    "instructions": "With both hands, bend at hips, row dumbbells to hips, squeezing lats at top."
+  },
+  {
+    "id": "lats_renegade_row",
+    "name": "Renegade Row",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["lats", "core"],
+    "instructions": "From a plank holding dumbbells, row one dumbbell at a time to hip while stabilizing core."
+  },
+  {
+    "id": "lats_incline_bench_row",
+    "name": "Incline Bench Row",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["lats", "mid back"],
+    "instructions": "Lie face down on incline bench, pull dumbbells to sides, focusing on squeezing lats."
+  },
+  {
+    "id": "lats_db_pullover",
+    "name": "Dumbbell Pullover",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["lats", "chest"],
+    "instructions": "Lie on bench, hold one dumbbell with both hands, arms extended. Lower DB behind head, then pull back to start."
+  }
+]
+[
+  {
+    "id": "biceps_db_curl",
+    "name": "DB Bicep Curl",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["biceps"],
+    "instructions": "Stand holding dumbbells at sides, palms up. Curl up with control, then lower slowly."
+  },
+  {
+    "id": "biceps_hammer_curl",
+    "name": "Hammer Curl",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["biceps", "brachialis", "brachioradialis"],
+    "instructions": "Hold dumbbells with palms facing each other. Curl up, keeping wrists neutral."
+  },
+  {
+    "id": "biceps_zottman_curl",
+    "name": "Zottman Curl",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["biceps", "forearms"],
+    "instructions": "Curl up palms up, rotate at top to palms down, lower slowly."
+  },
+  {
+    "id": "biceps_alternating_curl",
+    "name": "Alternating DB Curl",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["biceps"],
+    "instructions": "Alternate curling one dumbbell at a time, keeping elbow close to body."
+  },
+  {
+    "id": "biceps_cross_body_curl",
+    "name": "Cross-Body Curl",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["biceps", "brachialis"],
+    "instructions": "Curl dumbbell across the body toward opposite shoulder, one arm at a time."
+  },
+  {
+    "id": "triceps_oh_db_extension",
+    "name": "Overhead DB Extension (Two Arms)",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["triceps"],
+    "instructions": "Hold a dumbbell overhead with both hands. Lower behind head, then extend arms fully."
+  },
+  {
+    "id": "triceps_db_skull_crusher",
+    "name": "DB Skull Crushers",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["triceps"],
+    "instructions": "Lie on bench, dumbbells above chest. Lower toward forehead, then extend back up."
+  },
+  {
+    "id": "triceps_close_grip_db_press",
+    "name": "Close-Grip DB Press",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["triceps", "chest"],
+    "instructions": "Press dumbbells together above chest, lower slowly, keeping elbows close."
+  },
+  {
+    "id": "triceps_db_kickback",
+    "name": "DB Kickbacks",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["triceps"],
+    "instructions": "Bend forward, elbow at 90°. Extend arm back until straight, squeeze triceps."
+  },
+  {
+    "id": "triceps_pushup_bench",
+    "name": "Triceps Push-Up on Bench",
+    "type": "bodyweight",
+    "equipment": "Bench",
+    "muscle_groups": ["triceps", "chest"],
+    "instructions": "Place hands close together on bench, lower chest, then push up, keeping elbows in."
+  }
+]
+[
+  {
+    "id": "chest_flat_db_bench_press",
+    "name": "Flat DB Bench Press",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["chest", "triceps"],
+    "instructions": "Lie on flat bench, press dumbbells from chest upward, lower with control."
+  },
+  {
+    "id": "chest_incline_db_bench_press",
+    "name": "Incline DB Bench Press",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["chest", "shoulders"],
+    "instructions": "Lie on incline bench, press dumbbells up, lower to chest with control."
+  },
+  {
+    "id": "chest_db_fly",
+    "name": "DB Chest Fly",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["chest"],
+    "instructions": "Lie on flat bench, open arms wide, then squeeze dumbbells together above chest."
+  },
+  {
+    "id": "chest_incline_db_fly",
+    "name": "Incline DB Fly",
+    "type": "strength",
+    "equipment": "Dumbbells, Incline Bench",
+    "muscle_groups": ["chest", "shoulders"],
+    "instructions": "Lie on incline bench, open arms wide, squeeze together at the top."
+  },
+  {
+    "id": "chest_pullover_db",
+    "name": "Pullover with DB",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["chest", "lats"],
+    "instructions": "Lie across bench, hold dumbbell with both hands, lower behind head, pull back up."
+  },
+  {
+    "id": "chest_around_world_fly",
+    "name": "Around-the-World Fly",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["chest", "shoulders"],
+    "instructions": "Circle arms overhead with dumbbells, maintaining control throughout motion."
+  },
+  {
+    "id": "chest_close_grip_db_press",
+    "name": "Close-Grip DB Press",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["chest", "triceps"],
+    "instructions": "Press dumbbells together above chest, lower slowly, elbows close."
+  }
+]
+[
+  {
+    "id": "core_db_twist",
+    "name": "DB Twist",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "obliques"],
+    "instructions": "Sit upright, hold dumbbell at chest, twist torso side to side."
+  },
+  {
+    "id": "core_weighted_situp",
+    "name": "Weighted Sit-Up",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs"],
+    "instructions": "Lie on back, hold dumbbell at chest or overhead, sit up and return."
+  },
+  {
+    "id": "core_db_leg_raise",
+    "name": "DB Leg Raise",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "hip flexors"],
+    "instructions": "Lie on back, hold dumbbell overhead, raise legs up keeping core tight."
+  },
+  {
+    "id": "core_db_toe_touch",
+    "name": "DB Toe Touches",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs"],
+    "instructions": "Lie on back, legs straight up, reach dumbbell to toes."
+  },
+  {
+    "id": "core_plank_db_drag",
+    "name": "Plank DB Drag",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "core", "shoulders"],
+    "instructions": "In plank, drag dumbbell under body with alternating hands."
+  },
+  {
+    "id": "core_side_plank_db_reach",
+    "name": "Side Plank DB Reach Under",
+    "type": "strength",
+    "equipment": "Dumbbell, Bodyweight",
+    "muscle_groups": ["obliques", "core"],
+    "instructions": "In side plank, reach dumbbell under body, rotate torso."
+  },
+  {
+    "id": "core_weighted_dead_bug",
+    "name": "Weighted Dead Bug",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["core", "abs"],
+    "instructions": "Lie on back, dumbbells in hands, alternate lowering opposite arm and leg."
+  },
+  {
+    "id": "core_db_woodchopper",
+    "name": "DB Woodchopper",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "obliques"],
+    "instructions": "Stand, hold dumbbell with both hands, rotate and lift from hip to opposite shoulder."
+  },
+  {
+    "id": "core_seated_db_twist",
+    "name": "Seated DB Twist",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "obliques"],
+    "instructions": "Sit upright, feet off floor, rotate dumbbell side to side."
+  },
+  {
+    "id": "core_weighted_vup",
+    "name": "Weighted V-Up",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "hip flexors"],
+    "instructions": "Lie flat, hold dumbbell overhead, lift arms and legs to form 'V' at the top."
+  },
+  {
+    "id": "core_hanging_leg_raise",
+    "name": "Hanging Leg Raise",
+    "type": "strength",
+    "equipment": "Pull-Up Bar",
+    "muscle_groups": ["abs", "hip flexors"],
+    "instructions": "Hang from pull-up bar, raise legs to parallel or higher."
+  },
+  {
+    "id": "core_hanging_knee_raise_twist",
+    "name": "Hanging Knee Raise Twist",
+    "type": "strength",
+    "equipment": "Pull-Up Bar",
+    "muscle_groups": ["abs", "obliques"],
+    "instructions": "Hang from bar, raise knees to chest and rotate knees side to side."
+  },
+  {
+    "id": "core_bicycle_crunch_db",
+    "name": "Bicycle Crunch with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["abs", "obliques"],
+    "instructions": "Hold dumbbell overhead, cycle legs in air, rotate torso with each rep."
+  },
+  {
+    "id": "core_weighted_hollow_hold",
+    "name": "Weighted Hollow Hold",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["core", "abs"],
+    "instructions": "Lie on back, dumbbell at shoulders or legs, hold hollow position."
+  },
+  {
+    "id": "core_plank_shoulder_tap",
+    "name": "Plank with Shoulder Tap",
+    "type": "strength",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["core", "shoulders"],
+    "instructions": "From plank, alternate tapping each shoulder with the opposite hand."
+  },
+  {
+    "id": "core_db_side_bend",
+    "name": "DB Side Bend",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["obliques"],
+    "instructions": "Stand holding dumbbell at side, bend sideways, then return upright."
+  },
+  {
+    "id": "core_flutter_kicks",
+    "name": "Flutter Kicks",
+    "type": "bodyweight",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["abs", "hip flexors"],
+    "instructions": "Lie on back, hands under hips, alternate small, quick leg lifts."
+  },
+  {
+    "id": "core_db_side_crunch",
+    "name": "DB Side Crunch",
+    "type": "strength",
+    "equipment": "Dumbbell, Mat, Bench",
+    "muscle_groups": ["obliques", "abs"],
+    "instructions": "Lie on side, dumbbell behind head, crunch up laterally."
+  }
+]
+[
+  {
+    "id": "glutes_hip_thrust_bench",
+    "name": "Hip Thrust on Bench",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Rest upper back on bench, feet flat, dumbbell on hips. Thrust hips up and squeeze glutes."
+  },
+  {
+    "id": "glutes_single_leg_hip_thrust",
+    "name": "Single-Leg Hip Thrust",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "As hip thrust, but one foot on floor, other extended. Push through heel, squeeze glutes."
+  },
+  {
+    "id": "glutes_db_glute_bridge",
+    "name": "DB Glute Bridge",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Lie on back, feet flat, dumbbell on hips. Lift hips up, squeeze glutes at top."
+  },
+  {
+    "id": "glutes_frog_pump_db",
+    "name": "Frog Pump with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes"],
+    "instructions": "Lie on back, soles of feet together, knees open. Dumbbell on hips, pulse hips up."
+  },
+  {
+    "id": "glutes_bulgarian_split_squat",
+    "name": "Bulgarian Split Squat",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["glutes", "quads"],
+    "instructions": "Rear foot on bench, front foot forward. Lower until thigh is parallel, drive up."
+  },
+  {
+    "id": "glutes_curtsy_lunge",
+    "name": "Curtsy Lunge",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "adductors"],
+    "instructions": "Step leg behind and across, lower into lunge, keep chest tall."
+  },
+  {
+    "id": "glutes_rdl",
+    "name": "Romanian Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Stand tall, knees soft. Hinge at hips, lower dumbbells along legs, return up."
+  },
+  {
+    "id": "glutes_staggered_rdl",
+    "name": "Staggered RDL",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Stand with one foot slightly behind. Hinge at hips, lower dumbbells, return up."
+  },
+  {
+    "id": "glutes_stepup_bench",
+    "name": "Step-Up on Bench",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["glutes", "quads"],
+    "instructions": "Step onto bench with one leg, drive through heel, bring other foot up, step down."
+  },
+  {
+    "id": "glutes_sumo_deadlift",
+    "name": "Sumo Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings", "adductors"],
+    "instructions": "Wide stance, dumbbells between legs. Hinge at hips, lower, stand up tall."
+  },
+  {
+    "id": "glute_medius_clamshell_db",
+    "name": "Clamshell with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glute medius", "TFL"],
+    "instructions": "Lie on side, knees bent, dumbbell on top knee. Open knees apart, keep hips steady."
+  },
+  {
+    "id": "piriformis_donkey_kick_db",
+    "name": "Kneeling Donkey Kick with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes", "piriformis"],
+    "instructions": "On all fours, dumbbell behind knee, kick heel up to ceiling."
+  },
+  {
+    "id": "piriformis_fire_hydrant_db",
+    "name": "Fire Hydrant with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glute medius", "piriformis"],
+    "instructions": "On all fours, dumbbell behind knee, lift knee out to side."
+  },
+  {
+    "id": "bird_dog_db_row",
+    "name": "Bird Dog DB Row",
+    "type": "strength",
+    "equipment": "Dumbbell, Bodyweight",
+    "muscle_groups": ["core", "glutes", "back"],
+    "instructions": "On all fours, opposite arm/leg extended, perform a row with the dumbbell."
+  }
+]
+[
+  {
+    "id": "glutes_hip_thrust_bench",
+    "name": "Hip Thrust on Bench",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Rest upper back on bench, feet flat, dumbbell on hips. Thrust hips up and squeeze glutes."
+  },
+  {
+    "id": "glutes_single_leg_hip_thrust",
+    "name": "Single-Leg Hip Thrust",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "As hip thrust, but one foot on floor, other extended. Push through heel, squeeze glutes."
+  },
+  {
+    "id": "glutes_db_glute_bridge",
+    "name": "DB Glute Bridge",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Lie on back, feet flat, dumbbell on hips. Lift hips up, squeeze glutes at top."
+  },
+  {
+    "id": "glutes_frog_pump_db",
+    "name": "Frog Pump with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes"],
+    "instructions": "Lie on back, soles of feet together, knees open. Dumbbell on hips, pulse hips up."
+  },
+  {
+    "id": "glutes_bulgarian_split_squat",
+    "name": "Bulgarian Split Squat",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["glutes", "quads"],
+    "instructions": "Rear foot on bench, front foot forward. Lower until thigh is parallel, drive up."
+  },
+  {
+    "id": "glutes_curtsy_lunge",
+    "name": "Curtsy Lunge",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "adductors"],
+    "instructions": "Step leg behind and across, lower into lunge, keep chest tall."
+  },
+  {
+    "id": "glutes_rdl",
+    "name": "Romanian Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Stand tall, knees soft. Hinge at hips, lower dumbbells along legs, return up."
+  },
+  {
+    "id": "glutes_staggered_rdl",
+    "name": "Staggered RDL",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Stand with one foot slightly behind. Hinge at hips, lower dumbbells, return up."
+  },
+  {
+    "id": "glutes_stepup_bench",
+    "name": "Step-Up on Bench",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["glutes", "quads"],
+    "instructions": "Step onto bench with one leg, drive through heel, bring other foot up, step down."
+  },
+  {
+    "id": "glutes_sumo_deadlift",
+    "name": "Sumo Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings", "adductors"],
+    "instructions": "Wide stance, dumbbells between legs. Hinge at hips, lower, stand up tall."
+  },
+  {
+    "id": "glute_medius_clamshell_db",
+    "name": "Clamshell with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glute medius", "TFL"],
+    "instructions": "Lie on side, knees bent, dumbbell on top knee. Open knees apart, keep hips steady."
+  },
+  {
+    "id": "piriformis_donkey_kick_db",
+    "name": "Kneeling Donkey Kick with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes", "piriformis"],
+    "instructions": "On all fours, dumbbell behind knee, kick heel up to ceiling."
+  },
+  {
+    "id": "piriformis_fire_hydrant_db",
+    "name": "Fire Hydrant with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glute medius", "piriformis"],
+    "instructions": "On all fours, dumbbell behind knee, lift knee out to side."
+  },
+  {
+    "id": "bird_dog_db_row",
+    "name": "Bird Dog DB Row",
+    "type": "strength",
+    "equipment": "Dumbbell, Bodyweight",
+    "muscle_groups": ["core", "glutes", "back"],
+    "instructions": "On all fours, opposite arm/leg extended, perform a row with the dumbbell."
+  }
+]
+[
+  {
+    "id": "glutes_hip_thrust_bench",
+    "name": "Hip Thrust on Bench",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Rest upper back on bench, feet flat, dumbbell on hips. Thrust hips up and squeeze glutes."
+  },
+  {
+    "id": "glutes_single_leg_hip_thrust",
+    "name": "Single-Leg Hip Thrust",
+    "type": "strength",
+    "equipment": "Dumbbell, Bench",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "As hip thrust, but one foot on floor, other extended. Push through heel, squeeze glutes."
+  },
+  {
+    "id": "glutes_db_glute_bridge",
+    "name": "DB Glute Bridge",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Lie on back, feet flat, dumbbell on hips. Lift hips up, squeeze glutes at top."
+  },
+  {
+    "id": "glutes_frog_pump_db",
+    "name": "Frog Pump with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes"],
+    "instructions": "Lie on back, soles of feet together, knees open. Dumbbell on hips, pulse hips up."
+  },
+  {
+    "id": "glutes_bulgarian_split_squat",
+    "name": "Bulgarian Split Squat",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["glutes", "quads"],
+    "instructions": "Rear foot on bench, front foot forward. Lower until thigh is parallel, drive up."
+  },
+  {
+    "id": "glutes_curtsy_lunge",
+    "name": "Curtsy Lunge",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "adductors"],
+    "instructions": "Step leg behind and across, lower into lunge, keep chest tall."
+  },
+  {
+    "id": "glutes_rdl",
+    "name": "Romanian Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Stand tall, knees soft. Hinge at hips, lower dumbbells along legs, return up."
+  },
+  {
+    "id": "glutes_staggered_rdl",
+    "name": "Staggered RDL",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings"],
+    "instructions": "Stand with one foot slightly behind. Hinge at hips, lower dumbbells, return up."
+  },
+  {
+    "id": "glutes_stepup_bench",
+    "name": "Step-Up on Bench",
+    "type": "strength",
+    "equipment": "Dumbbells, Bench",
+    "muscle_groups": ["glutes", "quads"],
+    "instructions": "Step onto bench with one leg, drive through heel, bring other foot up, step down."
+  },
+  {
+    "id": "glutes_sumo_deadlift",
+    "name": "Sumo Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["glutes", "hamstrings", "adductors"],
+    "instructions": "Wide stance, dumbbells between legs. Hinge at hips, lower, stand up tall."
+  },
+  {
+    "id": "glute_medius_clamshell_db",
+    "name": "Clamshell with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glute medius", "TFL"],
+    "instructions": "Lie on side, knees bent, dumbbell on top knee. Open knees apart, keep hips steady."
+  },
+  {
+    "id": "piriformis_donkey_kick_db",
+    "name": "Kneeling Donkey Kick with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glutes", "piriformis"],
+    "instructions": "On all fours, dumbbell behind knee, kick heel up to ceiling."
+  },
+  {
+    "id": "piriformis_fire_hydrant_db",
+    "name": "Fire Hydrant with DB",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["glute medius", "piriformis"],
+    "instructions": "On all fours, dumbbell behind knee, lift knee out to side."
+  },
+  {
+    "id": "bird_dog_db_row",
+    "name": "Bird Dog DB Row",
+    "type": "strength",
+    "equipment": "Dumbbell, Bodyweight",
+    "muscle_groups": ["core", "glutes", "back"],
+    "instructions": "On all fours, opposite arm/leg extended, perform a row with the dumbbell."
+  }
+]
+[
+  {
+    "id": "hamstrings_rdl",
+    "name": "Romanian Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "instructions": "Stand tall, knees soft. Hinge at hips, lower dumbbells along legs, return up."
+  },
+  {
+    "id": "hamstrings_stiff_leg_deadlift",
+    "name": "Stiff-Leg Deadlift",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "instructions": "Keep knees nearly straight, hinge at hips, lower dumbbells along legs, return up."
+  },
+  {
+    "id": "hamstrings_single_leg_rdl",
+    "name": "Single-Leg RDL",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "instructions": "Balance on one leg, hinge forward, lower dumbbell along standing leg, return up."
+  },
+  {
+    "id": "hamstrings_glute_bridge_march",
+    "name": "Glute Bridge March",
+    "type": "strength",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hamstrings", "glutes", "core"],
+    "instructions": "From glute bridge, march legs one at a time without dropping hips."
+  },
+  {
+    "id": "hamstrings_hip_hinge",
+    "name": "Dumbbell Hip Hinge",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["hamstrings", "glutes"],
+    "instructions": "Hinge at hips, lower dumbbells, focus on stretch, return up with control."
+  },
+  {
+    "id": "hamstrings_prone_curl",
+    "name": "Prone Hamstring Curl",
+    "type": "strength",
+    "equipment": "Dumbbell",
+    "muscle_groups": ["hamstrings"],
+    "instructions": "Lie face down, hold dumbbell between feet, curl legs toward glutes."
+  }
+]
+[
+  {
+    "id": "calves_standing_db_calf_raise",
+    "name": "Standing DB Calf Raise",
+    "type": "strength",
+    "equipment": "Dumbbells",
+    "muscle_groups": ["calves"],
+    "instructions": "Stand on flat surface, raise heels off ground, lower slowly."
+  },
+  {
+    "id": "calves_pulse_squat",
+    "name": "Calf Pulse Squat",
+    "type": "strength",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["calves", "quads"],
+    "instructions": "Hold squat position, pulse heels up and down."
+  }
+]
+[
+  {
+    "id": "cooldown_childs_pose",
+    "name": "Child’s Pose",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["back", "hips"],
+    "instructions": "Sit on heels, arms extended forward, relax forehead to floor."
+  },
+  {
+    "id": "cooldown_seated_forward_fold",
+    "name": "Seated Forward Fold",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hamstrings", "back"],
+    "instructions": "Sit with legs extended, reach forward toward feet, keep back flat."
+  },
+  {
+    "id": "cooldown_supine_spinal_twist",
+    "name": "Supine Spinal Twist",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["spine", "obliques", "glutes"],
+    "instructions": "Lie on back, arms out, knees bent, rotate knees side to side."
+  },
+  {
+    "id": "cooldown_cat_cow",
+    "name": "Cat-Cow Flow",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["spine", "back"],
+    "instructions": "On hands and knees, alternate arching and rounding back."
+  },
+  {
+    "id": "cooldown_downward_dog",
+    "name": "Downward Dog Hold",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["calves", "back", "shoulders"],
+    "instructions": "From plank, lift hips, press heels down, hold."
+  },
+  {
+    "id": "cooldown_kneeling_hip_flexor",
+    "name": "Kneeling Hip Flexor Stretch",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["hip flexors", "quads"],
+    "instructions": "Kneel on one knee, tuck pelvis, push hips forward for stretch."
+  },
+  {
+    "id": "cooldown_standing_quad_stretch",
+    "name": "Standing Quad Stretch",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["quads"],
+    "instructions": "Stand tall, grab ankle, pull heel toward glute, balance."
+  },
+  {
+    "id": "cooldown_cross_body_shoulder",
+    "name": "Cross-Body Shoulder Stretch",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["shoulders"],
+    "instructions": "Arm across chest, use other hand to pull arm toward body."
+  },
+  {
+    "id": "cooldown_overhead_triceps_stretch",
+    "name": "Overhead Triceps Stretch",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["triceps", "shoulders"],
+    "instructions": "Reach one arm overhead, bend elbow, use other hand to assist."
+  },
+  {
+    "id": "cooldown_neck_side_stretch",
+    "name": "Neck Side Stretch",
+    "type": "mobility",
+    "equipment": "Bodyweight",
+    "muscle_groups": ["neck"],
+    "instructions": "Sit or stand tall, gently pull head to side with opposite hand."
+  }
+]
+
 
